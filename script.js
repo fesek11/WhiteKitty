@@ -6,85 +6,77 @@ const catImages = [
 ];
 
 const messages = {
-    normal: ['Мяу!', 'Шо зош?!', 'Муррр...', 'Пшшш!', 'Привіт!', 'Гав?'],
-    special: ['Кіт спить служба йде', 'Краще нагодуй']
+    normal: [
+        "Мяу!",
+        "Привіт!",
+        "Муррр...",
+        "Пшшш!",
+        "Гав?",
+        "На варті!",
+        "Служу!",
+        "Готовий!",
+        "Дисципліна!",
+        "Відданий!"
+    ],
+    special: [
+        "Кіт спить - служба йде!",
+        "Краще нагодуй!",
+        "Котів лапами не чіпати :3",
+        "Геройський кіт!",
+        "Легендарний мурчик!"
+    ]
 };
 
 let currentIndex = 0;
+let clickCount = 0;
+let lastClickTime = 0;
 
 // Function to create and add images to the carousel
 function createGallery() {
-    const gallery = document.getElementById('gallery');
+    const carousel = document.querySelector('.carousel');
     
-    catImages.forEach((imageUrl, index) => {
-        const imageContainer = document.createElement('div');
-        imageContainer.className = 'cat-image';
-        imageContainer.style.transform = `translateX(${index * 100}%)`;
+    // Add images to carousel
+    catImages.forEach((src, index) => {
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'cat-image';
+        imgContainer.style.transform = `translateX(${index * 100}%)`;
         
         const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = `Фото кота ${index + 1}`;
+        img.src = src;
+        img.alt = 'Білий Котик';
         
-        // Add message element
-        const message = document.createElement('div');
-        message.className = 'cat-message';
-        message.style.display = 'none';
+        imgContainer.appendChild(img);
+        carousel.appendChild(imgContainer);
         
-        // Add tap counter and message logic
-        let tapCount = 0;
-        let lastTapTime = 0;
-        
-        imageContainer.addEventListener('click', () => {
-            const currentTime = Date.now();
-            
-            if (currentTime - lastTapTime > 3000) {
-                tapCount = 0;
+        // Add click event for messages
+        imgContainer.addEventListener('click', () => {
+            const currentTime = new Date().getTime();
+            if (currentTime - lastClickTime > 1000) {
+                clickCount = 0;
             }
+            clickCount++;
+            lastClickTime = currentTime;
             
-            tapCount++;
-            lastTapTime = currentTime;
-            
-            // Show message
-            message.style.display = 'block';
-            
-            if (tapCount >= 5 && currentTime - lastTapTime < 3000) {
-                message.textContent = index === 0 ? messages.special[0] : messages.special[1];
-                setTimeout(() => {
-                    message.style.display = 'none';
-                    tapCount = 0;
-                }, 2000);
-            } else {
-                message.textContent = messages.normal[Math.floor(Math.random() * messages.normal.length)];
-                setTimeout(() => {
-                    message.style.display = 'none';
-                }, 1000);
-            }
+            showMessage(imgContainer);
         });
-        
-        imageContainer.appendChild(img);
-        imageContainer.appendChild(message);
-        gallery.appendChild(imageContainer);
     });
     
     // Add carousel navigation
     const prevButton = document.querySelector('.carousel-button.prev');
     const nextButton = document.querySelector('.carousel-button.next');
     
-    function updateCarousel() {
-        const images = document.querySelectorAll('.cat-image');
-        images.forEach((image, index) => {
-            image.style.transform = `translateX(${(index - currentIndex) * 100}%)`;
-        });
-    }
-    
     prevButton.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + catImages.length) % catImages.length;
-        updateCarousel();
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateCarousel();
+        }
     });
     
     nextButton.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % catImages.length;
-        updateCarousel();
+        if (currentIndex < catImages.length - 1) {
+            currentIndex++;
+            updateCarousel();
+        }
     });
     
     // Add keyboard navigation
@@ -100,11 +92,11 @@ function createGallery() {
     let touchStartX = 0;
     let touchEndX = 0;
     
-    gallery.addEventListener('touchstart', (e) => {
+    carousel.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
     });
     
-    gallery.addEventListener('touchend', (e) => {
+    carousel.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
     });
@@ -117,6 +109,41 @@ function createGallery() {
             prevButton.click();
         }
     }
+}
+
+function updateCarousel() {
+    const images = document.querySelectorAll('.cat-image');
+    images.forEach((img, index) => {
+        img.style.transform = `translateX(${(index - currentIndex) * 100}%)`;
+    });
+}
+
+function showMessage(element) {
+    // Remove any existing message
+    const existingMessage = document.querySelector('.cat-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create new message
+    const message = document.createElement('div');
+    message.className = 'cat-message';
+    
+    // Choose message based on click count
+    let messageText;
+    if (clickCount >= 5) {
+        messageText = messages.special[Math.floor(Math.random() * messages.special.length)];
+    } else {
+        messageText = messages.normal[Math.floor(Math.random() * messages.normal.length)];
+    }
+    
+    message.textContent = messageText;
+    element.appendChild(message);
+    
+    // Remove message after animation
+    setTimeout(() => {
+        message.remove();
+    }, 2000);
 }
 
 // Initialize the gallery when the page loads
