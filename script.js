@@ -108,4 +108,28 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mousemove', (e) => {
     const hue = (e.clientX / window.innerWidth) * 360;
     document.body.style.backgroundColor = `hsl(${hue}, 70%, 95%)`;
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Фоновий віджет при скролі
+    const sections = document.querySelectorAll('.story-block');
+    const body = document.body;
+    function updateBgOnScroll() {
+        let active = 0;
+        const scrollY = window.scrollY + window.innerHeight/2;
+        sections.forEach((sec, i) => {
+            const rect = sec.getBoundingClientRect();
+            const top = rect.top + window.scrollY;
+            const bottom = rect.bottom + window.scrollY;
+            if (scrollY >= top && scrollY < bottom) {
+                active = i;
+            }
+        });
+        body.classList.remove('bg-default', 'bg-darker', 'bg-night');
+        if (active === 0) body.classList.add('bg-default');
+        else if (active === 1) body.classList.add('bg-darker');
+        else body.classList.add('bg-night');
+    }
+    window.addEventListener('scroll', updateBgOnScroll);
+    updateBgOnScroll();
 }); 
