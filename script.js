@@ -10,58 +10,16 @@ const messages = {
     special: ['Кіт спить служба йде', 'Краще нагодуй']
 };
 
-// Function to check if position overlaps with other images
-function isOverlapping(newPos, images, currentIndex) {
-    const padding = 20; // Minimum space between images
-    for (let i = 0; i < images.length; i++) {
-        if (i === currentIndex) continue;
-        
-        const otherImage = images[i];
-        const otherRect = otherImage.getBoundingClientRect();
-        
-        if (
-            newPos.x < otherRect.right + padding &&
-            newPos.x + 300 > otherRect.left - padding &&
-            newPos.y < otherRect.bottom + padding &&
-            newPos.y + 300 > otherRect.top - padding
-        ) {
-            return true;
-        }
-    }
-    return false;
-}
+let currentIndex = 0;
 
-// Function to get random position within container
-function getRandomPosition(images, currentIndex) {
-    const container = document.getElementById('gallery');
-    const maxX = container.clientWidth - 300;
-    const maxY = container.clientHeight - 300;
-    
-    let attempts = 0;
-    let newPos;
-    
-    do {
-        newPos = {
-            x: Math.random() * maxX,
-            y: Math.random() * maxY
-        };
-        attempts++;
-    } while (isOverlapping(newPos, images, currentIndex) && attempts < 50);
-    
-    return newPos;
-}
-
-// Function to create and add images to the gallery
+// Function to create and add images to the carousel
 function createGallery() {
     const gallery = document.getElementById('gallery');
-    gallery.style.position = 'relative';
-    gallery.style.minHeight = '600px';
-    
-    const images = [];
     
     catImages.forEach((imageUrl, index) => {
         const imageContainer = document.createElement('div');
         imageContainer.className = 'cat-image';
+        imageContainer.style.transform = `translateX(${index * 100}%)`;
         
         const img = document.createElement('img');
         img.src = imageUrl;
@@ -71,12 +29,6 @@ function createGallery() {
         const message = document.createElement('div');
         message.className = 'cat-message';
         message.style.display = 'none';
-        
-        // Set initial position
-        const pos = getRandomPosition(images, index);
-        imageContainer.style.position = 'absolute';
-        imageContainer.style.left = `${pos.x}px`;
-        imageContainer.style.top = `${pos.y}px`;
         
         // Add tap counter and message logic
         let tapCount = 0;
@@ -112,16 +64,59 @@ function createGallery() {
         imageContainer.appendChild(img);
         imageContainer.appendChild(message);
         gallery.appendChild(imageContainer);
-        images.push(imageContainer);
-        
-        // Add random movement
-        setInterval(() => {
-            const newPos = getRandomPosition(images, index);
-            imageContainer.style.transition = 'all 2s ease-in-out';
-            imageContainer.style.left = `${newPos.x}px`;
-            imageContainer.style.top = `${newPos.y}px`;
-        }, 5000 + Math.random() * 5000);
     });
+    
+    // Add carousel navigation
+    const prevButton = document.querySelector('.carousel-button.prev');
+    const nextButton = document.querySelector('.carousel-button.next');
+    
+    function updateCarousel() {
+        const images = document.querySelectorAll('.cat-image');
+        images.forEach((image, index) => {
+            image.style.transform = `translateX(${(index - currentIndex) * 100}%)`;
+        });
+    }
+    
+    prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + catImages.length) % catImages.length;
+        updateCarousel();
+    });
+    
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % catImages.length;
+        updateCarousel();
+    });
+    
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevButton.click();
+        } else if (e.key === 'ArrowRight') {
+            nextButton.click();
+        }
+    });
+    
+    // Add touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    gallery.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    gallery.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        if (touchEndX < touchStartX - swipeThreshold) {
+            nextButton.click();
+        } else if (touchEndX > touchStartX + swipeThreshold) {
+            prevButton.click();
+        }
+    }
 }
 
 // Initialize the gallery when the page loads
