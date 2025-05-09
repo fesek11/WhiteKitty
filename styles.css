@@ -7,6 +7,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&display=swap');
 
 body {
     font-family: 'Inter', sans-serif;
@@ -29,7 +30,7 @@ body::before {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.45;
+    opacity: 0.5;
     z-index: -1;
     pointer-events: none;
 }
@@ -268,5 +269,132 @@ footer {
     }
     .main-content {
         max-width: 100%;
+    }
+}
+
+.story-timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    margin: 40px 0 60px 0;
+}
+
+.story-block {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+    min-height: 260px;
+    position: relative;
+}
+
+.story-block.left .story-photo {
+    order: 0;
+    margin-right: -40px;
+}
+.story-block.right .story-photo {
+    order: 1;
+    margin-left: -40px;
+}
+.story-block.left .story-parchment {
+    order: 1;
+}
+.story-block.right .story-parchment {
+    order: 0;
+}
+
+.story-photo {
+    flex: 0 0 160px;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+}
+.story-photo img {
+    width: 140px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 18px 18px 40px 40px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25), 0 0 0 8px #fff8e1;
+    border: 2px solid #bfa76a;
+    background: #fff8e1;
+}
+
+.story-parchment {
+    flex: 1 1 0;
+    background: rgba(255, 248, 225, 0.92);
+    border-radius: 32px 32px 48px 48px;
+    box-shadow:
+        0 4px 32px rgba(0,0,0,0.18),
+        0 0 0 8px rgba(191,167,106,0.12),
+        0 0 0 2px #bfa76a;
+    border: 2px solid #bfa76a;
+    padding: 36px 36px 32px 36px;
+    margin: 0 0 0 0;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.25em;
+    color: #2d1c08;
+    position: relative;
+    overflow: hidden;
+}
+.story-parchment:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: url('https://i.imgur.com/2QK8QyA.png') repeat;
+    opacity: 0.18;
+    z-index: 0;
+}
+.story-parchment h2 {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.5em;
+    color: #7a5c1b;
+    margin-bottom: 0.5em;
+    letter-spacing: 1px;
+}
+.story-parchment p {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0.7em;
+}
+
+.contacts-parchment {
+    max-width: 500px;
+    margin: 60px auto 0 auto;
+    background: rgba(255, 248, 225, 0.92);
+    border-radius: 32px 32px 48px 48px;
+    box-shadow:
+        0 4px 32px rgba(0,0,0,0.18),
+        0 0 0 8px rgba(191,167,106,0.12),
+        0 0 0 2px #bfa76a;
+    border: 2px solid #bfa76a;
+    padding: 36px 36px 32px 36px;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.2em;
+    color: #2d1c08;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+.contacts-parchment h2 {
+    color: #7a5c1b;
+    margin-bottom: 1em;
+    font-size: 1.3em;
+}
+
+@media (max-width: 900px) {
+    .story-block {
+        flex-direction: column !important;
+        align-items: center;
+        min-height: unset;
+    }
+    .story-photo {
+        margin: 0 0 16px 0 !important;
+    }
+    .story-parchment {
+        padding: 24px 12px 20px 12px;
+        font-size: 1em;
     }
 } 

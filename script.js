@@ -27,51 +27,28 @@ const messages = {
     ]
 };
 
-let currentIndex = 0;
 let clickCount = 0;
 let lastClickTime = 0;
 
-// Function to create and add images to the carousel
-function createGallery() {
-    const gallery = document.querySelector('.carousel');
-    gallery.style.display = 'grid';
-    gallery.style.gridTemplateColumns = 'repeat(4, 1fr)';
-    gallery.style.gap = '10px';
-    gallery.style.padding = '10px';
-    gallery.style.height = 'auto';
-    
-    // Add images to gallery
-    catImages.forEach((src, index) => {
+function createSidePhotos() {
+    const left = document.getElementById('side-photos-left');
+    const right = document.getElementById('side-photos-right');
+    left.innerHTML = '';
+    right.innerHTML = '';
+    catImages.forEach((src, i) => {
         const imgContainer = document.createElement('div');
         imgContainer.className = 'cat-image';
-        imgContainer.style.position = 'relative';
-        imgContainer.style.overflow = 'hidden';
-        imgContainer.style.borderRadius = '8px';
-        imgContainer.style.cursor = 'pointer';
-        imgContainer.style.transition = 'transform 0.3s ease';
-        
         const img = document.createElement('img');
         img.src = src;
         img.alt = 'Білий Котик';
-        img.style.width = '100%';
-        img.style.height = '200px';
-        img.style.objectFit = 'cover';
-        img.style.transition = 'transform 0.3s ease';
-        
         imgContainer.appendChild(img);
-        gallery.appendChild(imgContainer);
-        
         // Add hover effect
         imgContainer.addEventListener('mouseenter', () => {
-            imgContainer.style.transform = 'scale(1.05)';
-            img.style.transform = 'scale(1.1)';
+            imgContainer.style.transform = 'scale(1.08)';
         });
-        
         imgContainer.addEventListener('mouseleave', () => {
             imgContainer.style.transform = 'scale(1)';
-            img.style.transform = 'scale(1)';
         });
-        
         // Add click event for messages
         imgContainer.addEventListener('click', () => {
             const currentTime = new Date().getTime();
@@ -80,98 +57,34 @@ function createGallery() {
             }
             clickCount++;
             lastClickTime = currentTime;
-            
             showMessage(imgContainer);
         });
-    });
-    
-    // Add carousel navigation
-    const prevButton = document.querySelector('.carousel-button.prev');
-    const nextButton = document.querySelector('.carousel-button.next');
-    
-    prevButton.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
+        // Alternate left/right
+        if (i % 2 === 0) {
+            left.appendChild(imgContainer);
+        } else {
+            right.appendChild(imgContainer);
         }
-    });
-    
-    nextButton.addEventListener('click', () => {
-        if (currentIndex < catImages.length - 1) {
-            currentIndex++;
-            updateCarousel();
-        }
-    });
-    
-    // Add keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            prevButton.click();
-        } else if (e.key === 'ArrowRight') {
-            nextButton.click();
-        }
-    });
-    
-    // Add touch swipe support
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    gallery.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    gallery.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        if (touchEndX < touchStartX - swipeThreshold) {
-            nextButton.click();
-        } else if (touchEndX > touchStartX + swipeThreshold) {
-            prevButton.click();
-        }
-    }
-}
-
-function updateCarousel() {
-    const images = document.querySelectorAll('.cat-image');
-    images.forEach((img, index) => {
-        img.style.transform = `translateX(${(index - currentIndex) * 100}%)`;
     });
 }
 
 function showMessage(element) {
-    // Remove any existing message
     const existingMessage = document.querySelector('.cat-message');
-    if (existingMessage) {
-        existingMessage.remove();
-    }
-    
-    // Create new message
+    if (existingMessage) existingMessage.remove();
     const message = document.createElement('div');
     message.className = 'cat-message';
-    
-    // Choose message based on click count
     let messageText;
     if (clickCount >= 5) {
         messageText = messages.special[Math.floor(Math.random() * messages.special.length)];
     } else {
         messageText = messages.normal[Math.floor(Math.random() * messages.normal.length)];
     }
-    
     message.textContent = messageText;
     element.appendChild(message);
-    
-    // Remove message after animation
-    setTimeout(() => {
-        message.remove();
-    }, 2000);
+    setTimeout(() => { message.remove(); }, 2000);
 }
 
-// Initialize the gallery when the page loads
-document.addEventListener('DOMContentLoaded', createGallery);
+document.addEventListener('DOMContentLoaded', createSidePhotos);
 
 // Add mouse movement effect
 document.addEventListener('mousemove', (e) => {
