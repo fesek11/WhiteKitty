@@ -411,8 +411,8 @@ footer {
 
 @media (max-width: 700px) {
     .story-timeline {
-        gap: 32px;
-        margin: 20px 0 32px 0;
+        gap: 44px;
+        margin: 24px 0 44px 0;
     }
     .story-block {
         flex-direction: column !important;
@@ -420,34 +420,47 @@ footer {
         min-height: unset;
         max-width: 98vw;
         width: 100%;
+        margin-bottom: 32px;
+        box-sizing: border-box;
     }
     .story-photo {
-        margin: 0 0 12px 0 !important;
+        margin: 0 0 18px 0 !important;
         justify-content: center;
+        width: 100%;
+        display: flex;
     }
     .story-photo img {
-        width: 80vw;
-        max-width: 320px;
+        width: 95vw;
+        max-width: 370px;
         height: auto;
         min-height: 120px;
         border-radius: 18px 18px 32px 32px;
+        display: block;
+        margin: 0 auto;
+        box-sizing: border-box;
     }
     .story-parchment {
-        padding: 16px 6vw 14px 6vw;
-        font-size: 1.08em;
-        width: 95vw;
+        padding: 22px 7vw 20px 7vw;
+        font-size: 1.18em;
+        width: 97vw;
         max-width: 99vw;
-        margin: 0;
+        margin: 0 auto;
         border-radius: 18px 18px 32px 32px;
+        box-sizing: border-box;
     }
     .story-parchment h2 {
-        font-size: 1.1em;
+        font-size: 1.18em;
     }
     .contacts-parchment {
-        padding: 18px 6vw 16px 6vw;
-        font-size: 1em;
-        width: 95vw;
+        padding: 22px 7vw 20px 7vw;
+        font-size: 1.08em;
+        width: 97vw;
         max-width: 99vw;
         border-radius: 18px 18px 32px 32px;
+        margin: 0 auto 24px auto;
+        box-sizing: border-box;
+    }
+    .container {
+        padding: 10px 0 10px 0;
     }
 } 
