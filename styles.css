@@ -411,8 +411,8 @@ footer {
 
 @media (max-width: 700px) {
     .story-timeline {
-        gap: 44px;
-        margin: 24px 0 44px 0;
+        gap: 32px;
+        margin: 16px 0 32px 0;
     }
     .story-block {
         flex-direction: column !important;
@@ -420,47 +420,50 @@ footer {
         min-height: unset;
         max-width: 98vw;
         width: 100%;
-        margin-bottom: 32px;
+        margin-bottom: 24px;
         box-sizing: border-box;
     }
     .story-photo {
-        margin: 0 0 18px 0 !important;
+        margin: 0 0 10px 0 !important;
         justify-content: center;
         width: 100%;
         display: flex;
     }
     .story-photo img {
-        width: 95vw;
-        max-width: 370px;
+        width: 60vw;
+        max-width: 220px;
         height: auto;
-        min-height: 120px;
-        border-radius: 18px 18px 32px 32px;
+        min-height: 80px;
+        border-radius: 14px 14px 24px 24px;
         display: block;
         margin: 0 auto;
         box-sizing: border-box;
     }
     .story-parchment {
-        padding: 22px 7vw 20px 7vw;
-        font-size: 1.18em;
-        width: 97vw;
+        padding: 16px 4vw 18px 4vw;
+        font-size: 1em;
+        width: 96vw;
         max-width: 99vw;
         margin: 0 auto;
-        border-radius: 18px 18px 32px 32px;
+        border-radius: 14px 14px 24px 24px;
+        min-height: 120px;
         box-sizing: border-box;
+        overflow: visible;
+        word-break: break-word;
     }
     .story-parchment h2 {
-        font-size: 1.18em;
+        font-size: 1.05em;
     }
     .contacts-parchment {
-        padding: 22px 7vw 20px 7vw;
-        font-size: 1.08em;
-        width: 97vw;
+        padding: 16px 4vw 18px 4vw;
+        font-size: 0.98em;
+        width: 96vw;
         max-width: 99vw;
-        border-radius: 18px 18px 32px 32px;
-        margin: 0 auto 24px auto;
+        border-radius: 14px 14px 24px 24px;
+        margin: 0 auto 18px auto;
         box-sizing: border-box;
     }
     .container {
-        padding: 10px 0 10px 0;
+        padding: 6px 0 6px 0;
     }
 } 
