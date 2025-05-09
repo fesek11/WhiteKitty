@@ -6,19 +6,49 @@ const catImages = [
 ];
 
 const messages = {
-    normal: ['MEOW!', 'Шо зош?!', 'Муррр...', 'Пшшш!'],
+    normal: ['Мяу!', 'Шо зош?!', 'Муррр...', 'Пшшш!', 'Привіт!', 'Гав?'],
     special: ['Кіт спить служба йде', 'Краще нагодуй']
 };
 
+// Function to check if position overlaps with other images
+function isOverlapping(newPos, images, currentIndex) {
+    const padding = 20; // Minimum space between images
+    for (let i = 0; i < images.length; i++) {
+        if (i === currentIndex) continue;
+        
+        const otherImage = images[i];
+        const otherRect = otherImage.getBoundingClientRect();
+        
+        if (
+            newPos.x < otherRect.right + padding &&
+            newPos.x + 300 > otherRect.left - padding &&
+            newPos.y < otherRect.bottom + padding &&
+            newPos.y + 300 > otherRect.top - padding
+        ) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // Function to get random position within container
-function getRandomPosition() {
+function getRandomPosition(images, currentIndex) {
     const container = document.getElementById('gallery');
-    const maxX = container.clientWidth - 300; // 300 is image width
-    const maxY = container.clientHeight - 300; // 300 is image height
-    return {
-        x: Math.random() * maxX,
-        y: Math.random() * maxY
-    };
+    const maxX = container.clientWidth - 300;
+    const maxY = container.clientHeight - 300;
+    
+    let attempts = 0;
+    let newPos;
+    
+    do {
+        newPos = {
+            x: Math.random() * maxX,
+            y: Math.random() * maxY
+        };
+        attempts++;
+    } while (isOverlapping(newPos, images, currentIndex) && attempts < 50);
+    
+    return newPos;
 }
 
 // Function to create and add images to the gallery
@@ -27,21 +57,23 @@ function createGallery() {
     gallery.style.position = 'relative';
     gallery.style.minHeight = '600px';
     
+    const images = [];
+    
     catImages.forEach((imageUrl, index) => {
         const imageContainer = document.createElement('div');
         imageContainer.className = 'cat-image';
         
         const img = document.createElement('img');
         img.src = imageUrl;
-        img.alt = `Cat photo ${index + 1}`;
+        img.alt = `Фото кота ${index + 1}`;
         
         // Add message element
         const message = document.createElement('div');
         message.className = 'cat-message';
         message.style.display = 'none';
         
-        // Set random initial position
-        const pos = getRandomPosition();
+        // Set initial position
+        const pos = getRandomPosition(images, index);
         imageContainer.style.position = 'absolute';
         imageContainer.style.left = `${pos.x}px`;
         imageContainer.style.top = `${pos.y}px`;
@@ -80,14 +112,15 @@ function createGallery() {
         imageContainer.appendChild(img);
         imageContainer.appendChild(message);
         gallery.appendChild(imageContainer);
+        images.push(imageContainer);
         
         // Add random movement
         setInterval(() => {
-            const newPos = getRandomPosition();
+            const newPos = getRandomPosition(images, index);
             imageContainer.style.transition = 'all 2s ease-in-out';
             imageContainer.style.left = `${newPos.x}px`;
             imageContainer.style.top = `${newPos.y}px`;
-        }, 5000 + Math.random() * 5000); // Random interval between 5-10 seconds
+        }, 5000 + Math.random() * 5000);
     });
 }
 
