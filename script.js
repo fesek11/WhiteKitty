@@ -33,20 +33,44 @@ let lastClickTime = 0;
 
 // Function to create and add images to the carousel
 function createGallery() {
-    const carousel = document.querySelector('.carousel');
+    const gallery = document.querySelector('.carousel');
+    gallery.style.display = 'grid';
+    gallery.style.gridTemplateColumns = 'repeat(4, 1fr)';
+    gallery.style.gap = '10px';
+    gallery.style.padding = '10px';
+    gallery.style.height = 'auto';
     
-    // Add images to carousel
+    // Add images to gallery
     catImages.forEach((src, index) => {
         const imgContainer = document.createElement('div');
         imgContainer.className = 'cat-image';
-        imgContainer.style.transform = `translateX(${index * 100}%)`;
+        imgContainer.style.position = 'relative';
+        imgContainer.style.overflow = 'hidden';
+        imgContainer.style.borderRadius = '8px';
+        imgContainer.style.cursor = 'pointer';
+        imgContainer.style.transition = 'transform 0.3s ease';
         
         const img = document.createElement('img');
         img.src = src;
         img.alt = 'Білий Котик';
+        img.style.width = '100%';
+        img.style.height = '200px';
+        img.style.objectFit = 'cover';
+        img.style.transition = 'transform 0.3s ease';
         
         imgContainer.appendChild(img);
-        carousel.appendChild(imgContainer);
+        gallery.appendChild(imgContainer);
+        
+        // Add hover effect
+        imgContainer.addEventListener('mouseenter', () => {
+            imgContainer.style.transform = 'scale(1.05)';
+            img.style.transform = 'scale(1.1)';
+        });
+        
+        imgContainer.addEventListener('mouseleave', () => {
+            imgContainer.style.transform = 'scale(1)';
+            img.style.transform = 'scale(1)';
+        });
         
         // Add click event for messages
         imgContainer.addEventListener('click', () => {
@@ -92,11 +116,11 @@ function createGallery() {
     let touchStartX = 0;
     let touchEndX = 0;
     
-    carousel.addEventListener('touchstart', (e) => {
+    gallery.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
     });
     
-    carousel.addEventListener('touchend', (e) => {
+    gallery.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
     });
