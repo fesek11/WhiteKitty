@@ -334,7 +334,7 @@ footer {
 
 .story-parchment {
     flex: 1 1 0;
-    background: rgba(255, 248, 225, 0.92);
+    background: url('oldpage.jpg') center/cover repeat, rgba(255, 248, 225, 0.92);
     border-radius: 32px 32px 48px 48px;
     box-shadow:
         0 4px 32px rgba(0,0,0,0.18),
@@ -354,8 +354,7 @@ footer {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: url('https://i.imgur.com/2QK8QyA.png') repeat;
-    opacity: 0.18;
+    background: none;
     z-index: 0;
 }
 .story-parchment h2 {
@@ -374,7 +373,7 @@ footer {
 .contacts-parchment {
     max-width: 500px;
     margin: 60px auto 0 auto;
-    background: rgba(255, 248, 225, 0.92);
+    background: url('oldpage.jpg') center/cover repeat, rgba(255, 248, 225, 0.92);
     border-radius: 32px 32px 48px 48px;
     box-shadow:
         0 4px 32px rgba(0,0,0,0.18),
