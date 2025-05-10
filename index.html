@@ -38,26 +38,6 @@
             cursor: grab;
             z-index: 10;
         }
-        .hotspot {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 0, 0, 0.2);
-            border: 2px dashed #f00;
-        }
-        #hotspot1 { left: 300px; top: 200px; }
-        #hotspot2 { left: 500px; top: 100px; }
-        #story {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            display: none;
-            font-size: 1.2em;
-        }
         .story-block {
             background: transparent !important;
         }
@@ -148,18 +128,12 @@
         <video id="circle-video" src="whitegif.mp4" loop muted></video>
     </div>
     <div id="cat-face"></div>
-    <div id="hotspot1" class="hotspot"></div>
-    <div id="hotspot2" class="hotspot"></div>
     <div id="story"></div>
     <script src="script.js"></script>
     <script>
         const cat = document.getElementById('cat-face');
         const videoCircle = document.getElementById('video-circle');
         const circleVideo = document.getElementById('circle-video');
-        const hotspots = [
-            {el: document.getElementById('hotspot1'), story: "Here the cat found a cozy sunbeam."},
-            {el: document.getElementById('hotspot2'), story: "Here the cat met a friendly butterfly."}
-        ];
         const storyBox = document.getElementById('story');
 
         let offsetX, offsetY, isDragging = false;
