@@ -6,6 +6,27 @@
     <title>Білий Котик — Алхімічна історія</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        #video-circle {
+            position: absolute;
+            left: 300px;
+            top: 200px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px #0003;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #circle-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
         #cat-face {
             position: absolute;
             left: 50px;
@@ -36,6 +57,9 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             display: none;
             font-size: 1.2em;
+        }
+        .story-block {
+            background: rgba(255, 255, 220, 0.4);
         }
     </style>
 </head>
@@ -120,6 +144,9 @@
             <p>© 2024 Білий Котик - Всі права захищені</p>
         </footer>
     </div>
+    <div id="video-circle">
+        <video id="circle-video" src="whitegif.mp4" loop muted></video>
+    </div>
     <div id="cat-face"></div>
     <div id="hotspot1" class="hotspot"></div>
     <div id="hotspot2" class="hotspot"></div>
@@ -127,6 +154,8 @@
     <script src="script.js"></script>
     <script>
         const cat = document.getElementById('cat-face');
+        const videoCircle = document.getElementById('video-circle');
+        const circleVideo = document.getElementById('circle-video');
         const hotspots = [
             {el: document.getElementById('hotspot1'), story: "Here the cat found a cozy sunbeam."},
             {el: document.getElementById('hotspot2'), story: "Here the cat met a friendly butterfly."}
@@ -147,25 +176,20 @@
             cat.style.left = (e.pageX - offsetX) + 'px';
             cat.style.top = (e.pageY - offsetY) + 'px';
 
-            // Check for overlap with any hotspot
+            // Check if cat is inside the circle
             const catRect = cat.getBoundingClientRect();
-            let foundStory = null;
-            for (const hotspot of hotspots) {
-                const hsRect = hotspot.el.getBoundingClientRect();
-                const overlap = !(catRect.right < hsRect.left ||
-                                  catRect.left > hsRect.right ||
-                                  catRect.bottom < hsRect.top ||
-                                  catRect.top > hsRect.bottom);
-                if (overlap) {
-                    foundStory = hotspot.story;
-                    break;
-                }
-            }
-            if (foundStory) {
-                storyBox.textContent = foundStory;
-                storyBox.style.display = 'block';
+            const circleRect = videoCircle.getBoundingClientRect();
+            const overlap = !(catRect.right < circleRect.left ||
+                              catRect.left > circleRect.right ||
+                              catRect.bottom < circleRect.top ||
+                              catRect.top > circleRect.bottom);
+
+            if (overlap) {
+                circleVideo.style.display = 'block';
+                circleVideo.play();
             } else {
-                storyBox.style.display = 'none';
+                circleVideo.pause();
+                circleVideo.style.display = 'none';
             }
         });
 

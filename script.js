@@ -135,6 +135,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const cat = document.getElementById('cat-face');
+const gifCircle = document.getElementById('gif-circle');
+const circleGif = document.getElementById('circle-gif');
 const hotspots = [
   {
     el: document.getElementById('hotspot1'),
@@ -164,31 +166,18 @@ document.addEventListener('mousemove', (e) => {
   cat.style.left = (e.pageX - offsetX) + 'px';
   cat.style.top = (e.pageY - offsetY) + 'px';
 
-  // Перевірка на перетин з hotspot
+  // Check if cat is inside the circle
   const catRect = cat.getBoundingClientRect();
-  let foundStory = null;
-  let foundBg = null;
-  for (const hotspot of hotspots) {
-    const hsRect = hotspot.el.getBoundingClientRect();
-    const overlap = !(catRect.right < hsRect.left ||
-                      catRect.left > hsRect.right ||
-                      catRect.bottom < hsRect.top ||
-                      catRect.top > hsRect.bottom);
-    if (overlap) {
-      foundStory = hotspot.story;
-      foundBg = `url('${hotspot.bg}')`;
-      break;
-    }
-  }
-  if (foundStory) {
-    storyBox.textContent = foundStory;
-    storyBox.style.display = 'block';
-    document.body.style.backgroundImage = foundBg;
-    document.body.style.backgroundSize = 'cover';
+  const circleRect = gifCircle.getBoundingClientRect();
+  const overlap = !(catRect.right < circleRect.left ||
+                    catRect.left > circleRect.right ||
+                    catRect.bottom < circleRect.top ||
+                    catRect.top > circleRect.bottom);
+
+  if (overlap) {
+    circleGif.style.display = 'block';
   } else {
-    storyBox.style.display = 'none';
-    document.body.style.backgroundImage = defaultBg;
-    document.body.style.backgroundSize = 'cover';
+    circleGif.style.display = 'none';
   }
 });
 
@@ -197,7 +186,3 @@ document.addEventListener('mouseup', () => {
   cat.style.cursor = 'grab';
 });
 
-.story-block {
-  background: rgba(255, 255, 220, 0.7); /* light yellow with 70% opacity */
-  /* ...other styles... */
-}
