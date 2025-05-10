@@ -150,7 +150,7 @@ const hotspots = [
   }
 ];
 const storyBox = document.getElementById('story');
-const defaultBg = "url('your-default-bg.jpg')"; // замініть на ваш стандартний фон
+const defaultBg = "url('catsinsea.gif')"; // замініть на ваш стандартний фон
 
 let offsetX, offsetY, isDragging = false;
 
