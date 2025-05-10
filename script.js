@@ -132,4 +132,67 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     window.addEventListener('scroll', updateBgOnScroll);
     updateBgOnScroll();
-}); 
+});
+
+const cat = document.getElementById('cat-face');
+const hotspots = [
+  {
+    el: document.getElementById('hotspot1'),
+    story: "Тут кіт знайшов сонячний промінь.",
+    bg: "whitegif.gif"
+  },
+  {
+    el: document.getElementById('hotspot2'),
+    story: "Тут кіт побачив море котів.",
+    bg: "catsinsea.gif"
+  }
+];
+const storyBox = document.getElementById('story');
+const defaultBg = "url('your-default-bg.jpg')"; // замініть на ваш стандартний фон
+
+let offsetX, offsetY, isDragging = false;
+
+cat.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  offsetX = e.offsetX;
+  offsetY = e.offsetY;
+  cat.style.cursor = 'grabbing';
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  cat.style.left = (e.pageX - offsetX) + 'px';
+  cat.style.top = (e.pageY - offsetY) + 'px';
+
+  // Перевірка на перетин з hotspot
+  const catRect = cat.getBoundingClientRect();
+  let foundStory = null;
+  let foundBg = null;
+  for (const hotspot of hotspots) {
+    const hsRect = hotspot.el.getBoundingClientRect();
+    const overlap = !(catRect.right < hsRect.left ||
+                      catRect.left > hsRect.right ||
+                      catRect.bottom < hsRect.top ||
+                      catRect.top > hsRect.bottom);
+    if (overlap) {
+      foundStory = hotspot.story;
+      foundBg = `url('${hotspot.bg}')`;
+      break;
+    }
+  }
+  if (foundStory) {
+    storyBox.textContent = foundStory;
+    storyBox.style.display = 'block';
+    document.body.style.backgroundImage = foundBg;
+    document.body.style.backgroundSize = 'cover';
+  } else {
+    storyBox.style.display = 'none';
+    document.body.style.backgroundImage = defaultBg;
+    document.body.style.backgroundSize = 'cover';
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  cat.style.cursor = 'grab';
+});
