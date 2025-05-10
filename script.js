@@ -165,20 +165,6 @@ document.addEventListener('mousemove', (e) => {
   if (!isDragging) return;
   cat.style.left = (e.pageX - offsetX) + 'px';
   cat.style.top = (e.pageY - offsetY) + 'px';
-
-  // Check if cat is inside the circle
-  const catRect = cat.getBoundingClientRect();
-  const circleRect = gifCircle.getBoundingClientRect();
-  const overlap = !(catRect.right < circleRect.left ||
-                    catRect.left > circleRect.right ||
-                    catRect.bottom < circleRect.top ||
-                    catRect.top > circleRect.bottom);
-
-  if (overlap) {
-    circleGif.style.display = 'block';
-  } else {
-    circleGif.style.display = 'none';
-  }
 });
 
 document.addEventListener('mouseup', () => {
