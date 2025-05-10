@@ -196,3 +196,8 @@ document.addEventListener('mouseup', () => {
   isDragging = false;
   cat.style.cursor = 'grab';
 });
+
+.story-block {
+  background: rgba(255, 255, 220, 0.7); /* light yellow with 70% opacity */
+  /* ...other styles... */
+}
