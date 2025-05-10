@@ -41,6 +41,12 @@
         .story-block {
             background: transparent !important;
         }
+        body {
+            background: none !important;
+        }
+        body::before {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -125,7 +131,7 @@
         </footer>
     </div>
     <div id="video-circle">
-        <video id="circle-video" src="whitegif.mp4" loop muted></video>
+        <video id="circle-video" src="whitevideo.mp4" loop muted></video>
     </div>
     <div id="cat-face"></div>
     <div id="story"></div>
@@ -170,6 +176,19 @@
         document.addEventListener('mouseup', () => {
             isDragging = false;
             cat.style.cursor = 'grab';
+        });
+
+        const video = document.getElementById('scrollVideo');
+
+        video.addEventListener('loadedmetadata', () => {
+            const duration = video.duration;
+
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const maxScrollTop = document.body.scrollHeight - window.innerHeight;
+                const scrollFraction = scrollTop / maxScrollTop;
+                video.currentTime = scrollFraction * duration;
+            });
         });
     </script>
 </body>
