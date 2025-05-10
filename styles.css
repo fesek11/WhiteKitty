@@ -334,7 +334,7 @@ footer {
 
 .story-parchment {
     flex: 1 1 0;
-    background: url('oldpage.jpg') center/cover repeat, rgba(255, 248, 225, 0.92);
+    background: url('oldpage.jpg') center/cover repeat, rgba(255, 248, 225, 0.70);
     border-radius: 32px 32px 48px 48px;
     box-shadow:
         0 4px 32px rgba(0,0,0,0.18),
@@ -373,7 +373,7 @@ footer {
 .contacts-parchment {
     max-width: 500px;
     margin: 60px auto 0 auto;
-    background: url('oldpage.jpg') center/cover repeat, rgba(255, 248, 225, 0.92);
+    background: url('oldpage.jpg') center/cover repeat, rgba(255, 248, 225, 0.70);
     border-radius: 32px 32px 48px 48px;
     box-shadow:
         0 4px 32px rgba(0,0,0,0.18),
@@ -443,7 +443,7 @@ footer {
         font-size: 1em;
         border-radius: 14px 14px 24px 24px;
         box-sizing: border-box;
-        background: url('oldpage.jpg') center/cover repeat, rgba(255, 248, 225, 0.92);
+        background: url('oldpage.jpg') center/cover repeat, rgba(255, 248, 225, 0.70);
     }
     .story-parchment h2 {
         font-size: 1.05em;
