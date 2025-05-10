@@ -172,3 +172,15 @@ document.addEventListener('mouseup', () => {
   cat.style.cursor = 'grab';
 });
 
+const video = document.getElementById('scrollVideo');
+
+video.addEventListener('loadedmetadata', () => {
+  const duration = video.duration;
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const maxScrollTop = document.body.scrollHeight - window.innerHeight;
+    const scrollFraction = scrollTop / maxScrollTop;
+    video.currentTime = scrollFraction * duration;
+  });
+});
