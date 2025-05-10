@@ -1,8 +1,8 @@
 // Replace these URLs with your actual cat photos
 const catImages = [
     'Screenshot_1.jpg',
-    'Screenshot_2.jpg',
-    'Screenshot_3.jpg'
+    'Screenshot_2-removebg-preview.png',
+    'Screenshot_3-removebg-preview.png'
 ];
 
 const messages = {
