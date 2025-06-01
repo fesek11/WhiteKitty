@@ -108,7 +108,7 @@ header {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .cat-image:hover {
@@ -124,7 +124,7 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.45);
     color: #000000;
     padding: 15px 25px;
     border-radius: 4px;
@@ -139,7 +139,7 @@ header {
 @keyframes fadeIn {
     0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.95);
+        transform: translate(-50%, -50%) scale(0.6);
     }
     100% {
         opacity: 1;
