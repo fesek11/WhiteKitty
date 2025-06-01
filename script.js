@@ -132,6 +132,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     window.addEventListener('scroll', updateBgOnScroll);
     updateBgOnScroll();
+
+    // Make carousel images clickable to enlarge/shrink
+    const carouselImages = document.querySelectorAll('.photo-carousel img');
+
+    carouselImages.forEach(img => {
+        img.style.transition = 'transform 0.3s ease-in-out'; // Add transition for smooth animation
+        img.style.cursor = 'pointer'; // Change cursor to indicate interactivity
+
+        img.addEventListener('click', () => {
+            // Remove enlarged class from any other enlarged images
+            carouselImages.forEach(otherImg => {
+                if (otherImg !== img && otherImg.classList.contains('enlarged')) {
+                    otherImg.classList.remove('enlarged');
+                }
+            });
+            
+            // Toggle the 'enlarged' class on the clicked image
+            img.classList.toggle('enlarged');
+        });
+    });
 });
 
 // Add scroll-controlled GIF animation
@@ -152,7 +172,9 @@ function controlGifPlayback() {
     newImg.style.objectFit = 'cover';
     
     // Replace the old image with the new one
-    gifImg.parentNode.replaceChild(newImg, gifImg);
+    if (gifImg.parentNode) {
+      gifImg.parentNode.replaceChild(newImg, gifImg);
+    }
     
     // Update the reference
     gifImg = newImg;
