@@ -6,38 +6,6 @@
     <title>Білий Котик — Алхімічна історія</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        #video-circle {
-            position: absolute;
-            left: 300px;
-            top: 200px;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #fff;
-            box-shadow: 0 0 10px #0003;
-            background: #eee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #circle-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-        #cat-face {
-            position: absolute;
-            left: 50px;
-            top: 50px;
-            width: 80px;
-            height: 80px;
-            background: url('cat.png') no-repeat center center;
-            background-size: cover;
-            cursor: grab;
-            z-index: 10;
-        }
         .story-block {
             background: transparent !important;
         }
@@ -134,66 +102,6 @@
             <p>© 2024 Білий Котик - Всі права захищені</p>
         </footer>
     </div>
-    <div id="video-circle">
-        <video id="circle-video" src="whitevideo.mp4" loop muted></video>
-    </div>
-    <div id="cat-face"></div>
-    <div id="story"></div>
     <script src="script.js"></script>
-    <script>
-        const cat = document.getElementById('cat-face');
-        const videoCircle = document.getElementById('video-circle');
-        const circleVideo = document.getElementById('circle-video');
-        const storyBox = document.getElementById('story');
-
-        let offsetX, offsetY, isDragging = false;
-
-        cat.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            offsetX = e.offsetX;
-            offsetY = e.offsetY;
-            cat.style.cursor = 'grabbing';
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            cat.style.left = (e.pageX - offsetX) + 'px';
-            cat.style.top = (e.pageY - offsetY) + 'px';
-
-            // Check if cat is inside the circle
-            const catRect = cat.getBoundingClientRect();
-            const circleRect = videoCircle.getBoundingClientRect();
-            const overlap = !(catRect.right < circleRect.left ||
-                              catRect.left > circleRect.right ||
-                              catRect.bottom < circleRect.top ||
-                              catRect.top > circleRect.bottom);
-
-            if (overlap) {
-                circleVideo.style.display = 'block';
-                circleVideo.play();
-            } else {
-                circleVideo.pause();
-                circleVideo.style.display = 'none';
-            }
-        });
-
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            cat.style.cursor = 'grab';
-        });
-
-        const video = document.getElementById('scrollVideo');
-
-        video.addEventListener('loadedmetadata', () => {
-            const duration = video.duration;
-
-            window.addEventListener('scroll', () => {
-                const scrollTop = window.scrollY;
-                const maxScrollTop = document.body.scrollHeight - window.innerHeight;
-                const scrollFraction = scrollTop / maxScrollTop;
-                video.currentTime = scrollFraction * duration;
-            });
-        });
-    </script>
 </body>
 </html> 
