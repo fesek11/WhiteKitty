@@ -184,3 +184,41 @@ video.addEventListener('loadedmetadata', () => {
     video.currentTime = scrollFraction * duration;
   });
 });
+
+// Add scroll-controlled GIF animation
+let lastScrollTop = 0;
+const scrollGif = document.getElementById('scrollGif');
+const gifImg = scrollGif.querySelector('img');
+
+// Function to control GIF playback direction
+function controlGifPlayback() {
+    const scrollTop = window.scrollY;
+    const scrollDirection = scrollTop > lastScrollTop ? 'forward' : 'backward';
+    
+    // Create a new image element to reset the GIF
+    const newImg = document.createElement('img');
+    newImg.src = gifImg.src;
+    newImg.style.width = '100%';
+    newImg.style.height = '100%';
+    newImg.style.objectFit = 'cover';
+    
+    // Replace the old image with the new one
+    gifImg.parentNode.replaceChild(newImg, gifImg);
+    
+    // Update the reference
+    gifImg = newImg;
+    
+    // Store the current scroll position
+    lastScrollTop = scrollTop;
+}
+
+// Add scroll event listener
+window.addEventListener('scroll', () => {
+    // Throttle the scroll event to improve performance
+    if (!window.scrollThrottle) {
+        window.scrollThrottle = setTimeout(() => {
+            controlGifPlayback();
+            window.scrollThrottle = null;
+        }, 100); // Adjust this value to control sensitivity
+    }
+});
