@@ -134,57 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateBgOnScroll();
 });
 
-const cat = document.getElementById('cat-face');
-const gifCircle = document.getElementById('gif-circle');
-const circleGif = document.getElementById('circle-gif');
-const hotspots = [
-  {
-    el: document.getElementById('hotspot1'),
-    story: "Тут кіт знайшов сонячний промінь.",
-    bg: "whitegif.gif"
-  },
-  {
-    el: document.getElementById('hotspot2'),
-    story: "Тут кіт побачив море котів.",
-    bg: "catsinsea.gif"
-  }
-];
-const storyBox = document.getElementById('story');
-const defaultBg = "url('catsinsea.gif')"; // замініть на ваш стандартний фон
-
-let offsetX, offsetY, isDragging = false;
-
-cat.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  offsetX = e.offsetX;
-  offsetY = e.offsetY;
-  cat.style.cursor = 'grabbing';
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-  cat.style.left = (e.pageX - offsetX) + 'px';
-  cat.style.top = (e.pageY - offsetY) + 'px';
-});
-
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-  cat.style.cursor = 'grab';
-});
-
-const video = document.getElementById('scrollVideo');
-
-video.addEventListener('loadedmetadata', () => {
-  const duration = video.duration;
-
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const maxScrollTop = document.body.scrollHeight - window.innerHeight;
-    const scrollFraction = scrollTop / maxScrollTop;
-    video.currentTime = scrollFraction * duration;
-  });
-});
-
 // Add scroll-controlled GIF animation
 let lastScrollTop = 0;
 const scrollGif = document.getElementById('scrollGif');
